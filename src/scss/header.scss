@@ -1,0 +1,37 @@
+.excel__header {
+	position: absolute;
+	width: 100%;
+	top: 0;
+	left: 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background-color: #1F7645;
+	padding: 10px;
+
+	.input {
+		padding: 5px;
+		color: rgba(0, 0, 0, 0.487);
+		font-size: 16px;
+		line-height: 1.2;
+		border-radius: 5px;
+		overflow: hidden;
+		border: none;
+
+		&:focus {
+			color: #000;
+			box-shadow: 0 0 0 2px #88b8ff;
+			outline: none;
+		}
+	}
+
+	.btns {
+		display: flex;
+
+		.btn {
+			& + .btn {
+				margin-left: 15px;
+			}
+		}
+	}
+}
