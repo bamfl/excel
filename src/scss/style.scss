@@ -19,6 +19,13 @@ html, body {
 	.btn {
 		cursor: pointer;
 		font-size: 24px;
+		display: flex;
+		justify-content:center;
+		align-items: center;
+
+		& + .btn {
+			margin-left: 15px;
+		}
 
 		&:hover{
 			color: rgb(165, 163, 163);
@@ -30,6 +37,10 @@ html, body {
 
 		&-white {
 			color: #fff;
+		}
+
+		&-black {
+			color: #000;
 		}
 	}
 }

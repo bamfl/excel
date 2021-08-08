@@ -1,3 +1,27 @@
 .excel__formula {
-	padding: 0;
+	position: absolute;
+	width: 100%;
+	top: 95px;
+	left: 0;
+	display: flex;
+	align-items: center;
+	border-bottom: 1px solid #f1f3f4;
+
+	.icon {
+		font-size: 16px;
+		font-style: italic;
+		padding: 10px;
+		border-right: 1px solid #f1f3f4;
+	}
+
+	.input {
+		width: 100%;
+		padding: 10px;
+		border: none;
+		outline: none;
+
+		&:focus {
+			outline: 1px solid #88b8ff;
+		}
+	}
 }
