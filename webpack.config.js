@@ -25,7 +25,10 @@ module.exports = {
       template: path.resolve(__dirname, './src/index.html'),
     }),
 		new CopyPlugin({
-      patterns: [{ from: path.resolve(__dirname, './src/assets'), to: path.resolve(__dirname, './dist/assets') }],
+      patterns: [
+				{ from: path.resolve(__dirname, './src/assets'), to: path.resolve(__dirname, './dist/assets') },
+				{ from: path.resolve(__dirname, './src/layouts'), to: path.resolve(__dirname, './dist/layouts') }
+			],
     }),
     new MiniCssExtractPlugin({
       filename: isProd ? 'style.[contenthash].css' : 'style.css',
