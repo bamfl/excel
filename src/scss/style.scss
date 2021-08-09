@@ -1,12 +1,49 @@
-@import "~normalize.css";
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,700;1,400&display=swap");
+@import "~normalize.css";
 
-html,
-body {
-	font-family: "Roboto", sans-serif;
+*, *::before, *::after {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
-h1 {
-	text-align: center;
-	color: blue;
+html, body {
+	font-family: "Roboto", sans-serif;
+	font-size: 14px;
+	font-weight: 400;
+}
+
+.excel {
+	position: relative;
+	color: #888;
+	height: 100%;
+	max-width: 100%;
+
+	.btn {
+		cursor: pointer;
+		font-size: 24px;
+		display: flex;
+		justify-content:center;
+		align-items: center;
+
+		& + .btn {
+			margin-left: 15px;
+		}
+
+		&:hover{
+			color: rgb(165, 163, 163);
+		}
+
+		&:active{
+			color: #000;
+		}
+
+		&-white {
+			color: #fff;
+		}
+
+		&-black {
+			color: #000;
+		}
+	}
 }
