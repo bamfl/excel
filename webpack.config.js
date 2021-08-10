@@ -4,7 +4,6 @@ const CopyPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const isProd = process.env.NODE_ENV === 'production';
-const ESLintPlugin = require('eslint-webpack-plugin');
 
 module.exports = {
 	target: isProd ? 'browserslist' : 'web',
@@ -32,8 +31,7 @@ module.exports = {
     }),
     new MiniCssExtractPlugin({
       filename: isProd ? 'style.[contenthash].css' : 'style.css',
-    }),
-		new ESLintPlugin()
+    })
   ],
 	module: {
     rules: [
@@ -75,7 +73,9 @@ module.exports = {
 	devServer: {
     contentBase: path.join(__dirname, './dist'),
     compress: true,
+		watchContentBase: true,
     port: 9000,
+		hot: true
   },
 	devtool: isProd ? false : 'source-map'
 };

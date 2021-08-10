@@ -5,6 +5,14 @@ import '../scss/table.scss';
 import '../scss/formula.scss';
 import '../scss/dashboard.scss';
 
-import { module1 } from './modules/module1';
+import { Excel } from '../components/excel/excel';
+import { Header } from '../components/header/Header';
+import { Toolbar } from '../components/toolbar/Toolbar';
+import { Formula } from '../components/formula/Formula';
+import { Table } from '../components/table/Table';
 
-module1();
+const excel = new Excel('#app', {
+	components: [	Header, Toolbar, Formula,	Table ]
+});
+
+excel.render();
