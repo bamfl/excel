@@ -23,8 +23,12 @@ class Dom {
 	}
 
 	append(node) {
-		this.$el.appendChild(node.$el);
+		if (node instanceof Dom) {
+			node = node.$el;
+		}
 		
+		this.$el.appendChild(node);
+
 		return this;
 	}
 }
