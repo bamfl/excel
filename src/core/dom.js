@@ -1,9 +1,41 @@
 class Dom {
+	constructor(selector) {
+		if (typeof selector === 'string') {
+			this.el = document.querySelector(selector);
+		} else {
+			this.el = selector;
+		}
+	}
 
+	html(newHtml) {
+		if (newHtml) {
+			this.el.innerHTML = newHtml;
+
+			return this;
+		}
+
+		return this.el.innerHTML;
+	}
+
+	append(node) {
+		if (node instanceof Dom) {
+			node = node.el;
+		}
+
+		this.el.append(node);
+
+		return this;
+	}
+
+	clear() {
+		this.html('');
+
+		return this;
+	}
 }
 
-export function $() {
-	return Dom();
+export function $(selector) {
+	return new Dom(selector);
 }
 
 $.create = (tagName, classes = '') => {
@@ -13,5 +45,5 @@ $.create = (tagName, classes = '') => {
 		el.classList.add(classes);
 	}
 
-	return el;
+	return $(el);
 };
