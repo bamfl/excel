@@ -1,7 +1,6 @@
 import { DOMListener } from "./DOMListener";
 
-export class ExcelComponent extends DOMListener {
-	// Возвращает шаблон компонента
+export class ExcelComponent extends DOMListener {	
 	toHTML() {
 		return ``;
 	}
