@@ -44,7 +44,7 @@ export function createTable(rowsCount = 15) {
 	table += createRow('', () => createColumns(colsCount));
 
 	for (let i = 0; i < rowsCount; i++) {
-		table += createRow(i+1, () => createCells(colsCount));		
+		table += createRow(i + 1, () => createCells(colsCount));		
 	}
 
 	return table;
