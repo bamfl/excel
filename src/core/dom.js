@@ -36,6 +36,10 @@ class Dom {
 	on(eventType, cb) {
 		this.el.addEventListener(eventType, cb);
 	}
+
+	off(eventType, cb) {
+		this.el.removeEventListener(eventType, cb);
+	}
 }
 
 export function $(selector) {

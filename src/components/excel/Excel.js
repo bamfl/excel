@@ -26,5 +26,6 @@ export class Excel {
 		this.appEl.append(this.getRoot());
 
 		this.components.forEach(component => component.init());
+		// this.components.forEach(component => component.destroy());
 	}
 }
