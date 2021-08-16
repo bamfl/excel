@@ -15,10 +15,10 @@ export class DOMListener {
 			const method = getMethodName(listener);
 
 			if (!this[method]) {
-				throw new Error(`There is not ${[method]} method in ${this.name} Component`);
+				throw new Error(`There is not ${this[method]} in ${this.name} component`);
 			}
 
-			this.root.on(listener, this[method].bind(this));
+			this.root.on(listener, this[method]);
 		});
 	}
 
