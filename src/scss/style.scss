@@ -11,6 +11,22 @@ html, body {
 	font-family: "Roboto", sans-serif;
 	font-size: 14px;
 	font-weight: 400;
+
+	::-webkit-scrollbar {
+		width: 10px;
+		height: 10px;
+	}
+	
+	::-webkit-scrollbar-track {
+		background-color: #e4e4e4;
+		border-radius: 100px;
+	}
+	
+	::-webkit-scrollbar-thumb {
+		border-radius: 100px;
+		background: #1F7645;
+		box-shadow: inset 2px 2px 5px 0 rgba(#fff, 0.5);
+	}
 }
 
 .excel {
