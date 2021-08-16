@@ -21,7 +21,12 @@ function createColumns(colsCount) {
 	const columns = [];
 
 	for (let i = 0; i < colsCount; i++) {
-		columns.push(`<div class="column">${getAtoZ(i)}</div>`);
+		columns.push(`
+			<div class="column">
+				${getAtoZ(i)}
+				<div class="column-resize"></div>
+			</div>	
+		`);
 	}
 
 	return columns.join('');
@@ -30,7 +35,10 @@ function createColumns(colsCount) {
 function createRow(num, cbFn) {
 	return `
 		<div class="row">
-			<div class="row-info">${num}</div>
+			<div class="row-info">
+				${num}
+				${num ? `<div class="row-resize"></div>` : ''}
+			</div>
 			<div class="row-data">${cbFn()}</div>
 		</div>
 	`;

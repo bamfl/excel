@@ -10,7 +10,7 @@
 	.row {
 		display: flex;
 		min-height: 20px;
-		height: 24px;
+		height: 24px;		
 	}
 
 	.row-info {
@@ -22,6 +22,25 @@
 		border: 1px solid #f1f3f4;
 		background-color: #f8f9fa;
 		border-top: none;
+		position: relative;
+		
+		.row-resize {
+			position: absolute;
+			bottom: -2px;
+			left: 0px;
+			width: 100%;
+			height: 4px;
+			background-color: #88b8ff;
+			z-index: 5;
+			cursor: row-resize;
+			display: none;		
+		}
+
+		&:hover{
+			.row-resize {
+				display: block;
+			}
+		}
 	}
 
 	.row-data {
@@ -29,6 +48,7 @@
 	}
 
 	.column {
+		position: relative;
 		display: flex;
 		justify-content:center;
 		align-items: center;
@@ -39,6 +59,24 @@
 		height: 100%;
 		border-top: none;
 		border-left: none;
+
+		&-resize {
+			position: absolute;
+			top: 0;
+			right: -2px;
+			width: 4px;
+			height: 100%;
+			background-color: #88b8ff;
+			z-index: 5;
+			cursor: col-resize;
+			display: none;		
+		}
+
+		&:hover{
+			.column-resize {
+				display: block;
+			}
+		}
 	}
 
 	.cell {

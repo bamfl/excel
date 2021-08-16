@@ -16,18 +16,18 @@ export class Table extends ExcelComponent {
 	}
 
 	onClick(event) {
-		console.log('Table: onClick', event);
+		// console.log('Table: onClick', event);
 	}
 
 	onMousedown(event) {
-		console.log('Table: onMousedown', event);
+		console.log('Table: onMousedown', event.target);
 	}
 
 	onMousemove(event) {
-		console.log('Table: onMousemove', event);
+		// console.log('Table: onMousemove', event);
 	}
 
 	onMouseup(event) {
-		console.log('Table: onMouseup', event);
+		// console.log('Table: onMouseup', event);
 	}
 }
