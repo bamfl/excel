@@ -9,6 +9,8 @@ export class Table extends ExcelComponent {
 			name: 'Table',
 			listeners: ['click', 'mousedown', 'mousemove', 'mouseup']
 		});
+
+		this.isClicked = false;
 	}
 
 	toHTML() {
@@ -20,14 +22,23 @@ export class Table extends ExcelComponent {
 	}
 
 	onMousedown(event) {
-		console.log('Table: onMousedown', event.target);
+		this.isClicked = true;
+
+		this.column = event.target.closest('[data-type="resizable"]');
+		this.columnWidth = parseInt(getComputedStyle(this.column).width);
+
+		this.positionXStart = event.clientX;
 	}
 
 	onMousemove(event) {
-		// console.log('Table: onMousemove', event);
+		if (this.isClicked) {
+			const resizeX = this.positionXStart - event.clientX;
+
+			this.column.style.width = this.columnWidth - resizeX + 'px';
+		}
 	}
 
 	onMouseup(event) {
-		// console.log('Table: onMouseup', event);
+		this.isClicked = false;
 	}
 }
