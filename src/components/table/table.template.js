@@ -11,7 +11,7 @@ function createCells(cellsCount) {
 	const cells = [];
 
 	for (let i = 0; i < cellsCount; i++) {
-		cells.push(`<div class="cell" contenteditable></div>`);
+		cells.push(`<div class="cell" data-col="${i + 1}" contenteditable></div>`);
 	}
 
 	return cells.join('');	
@@ -24,7 +24,9 @@ function createColumns(colsCount) {
 		columns.push(`
 			<div class="column" data-type="resizable">
 				${getAtoZ(i)}
-				<div class="column-resize"></div>
+				<div class="column-resize">
+					<div class="column-resize-line"></div>
+				</div>
 			</div>	
 		`);
 	}
@@ -34,12 +36,13 @@ function createColumns(colsCount) {
 
 function createRow(num, cbFn) {
 	return `
-		<div class="row">
+		<div class="row" data-type="resizable">
 			<div class="row-info">
 				${num}
 				${num ? `<div class="row-resize"></div>` : ''}
 			</div>
 			<div class="row-data">${cbFn()}</div>
+			${num ? `<div class="row-resize-line"></div>` : ''}
 		</div>
 	`;
 }

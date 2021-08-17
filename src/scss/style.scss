@@ -1,13 +1,16 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,700;1,400&display=swap");
 @import "~normalize.css";
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
 	font-family: "Roboto", sans-serif;
 	font-size: 14px;
 	font-weight: 400;
@@ -16,15 +19,15 @@ html, body {
 		width: 10px;
 		height: 10px;
 	}
-	
+
 	::-webkit-scrollbar-track {
 		background-color: #e4e4e4;
 		border-radius: 100px;
 	}
-	
+
 	::-webkit-scrollbar-thumb {
 		border-radius: 100px;
-		background: #1F7645;
+		background: #1f7645;
 		box-shadow: inset 2px 2px 5px 0 rgba(#fff, 0.5);
 	}
 }
@@ -39,18 +42,18 @@ html, body {
 		cursor: pointer;
 		font-size: 24px;
 		display: flex;
-		justify-content:center;
+		justify-content: center;
 		align-items: center;
 
 		& + .btn {
 			margin-left: 15px;
 		}
 
-		&:hover{
+		&:hover {
 			color: rgb(165, 163, 163);
 		}
 
-		&:active{
+		&:active {
 			color: #000;
 		}
 
