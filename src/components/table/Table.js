@@ -12,12 +12,10 @@ export class Table extends ExcelComponent {
 			name: 'Table',
 			listeners: ['click', 'mousedown', 'mousemove', 'mouseup']
 		});
-
-		this.isClicked = false;
 	}
 
 	toHTML() {
-		return createTable(1000);
+		return createTable(20);
 	}
 
 	onClick() {
