@@ -3,6 +3,7 @@ import { mousedown } from './table.mousedown';
 import { mousemove } from './table.mousemove';
 import { mouseup } from './table.mouseup';
 import { createTable } from './table.template';
+import { TableSelection } from './TableSelection';
 
 export class Table extends ExcelComponent {
 	static className = 'excel__table';
@@ -32,5 +33,11 @@ export class Table extends ExcelComponent {
 
 	onMouseup() {
 		mouseup.call(this);
+	}
+
+	init() {
+		super.init();
+		
+		this.selection = new TableSelection();
 	}
 }
