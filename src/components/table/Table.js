@@ -51,8 +51,12 @@ export class Table extends ExcelComponent {
 		} else if (event.key === 'ArrowRight' || event.key === 'Tab') {
 			event.preventDefault();
 			this.selection.selectOnRight(this.root);
+			
 
-		} else if (event.key === 'Enter') {
+		} else if (event.shiftKey && event.key === 'Enter') {
+			return;
+			
+		}	else if (event.key === 'Enter') {
 			event.preventDefault();
 			this.selection.selectDown(this.root);
 			
