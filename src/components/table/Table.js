@@ -19,12 +19,20 @@ export class Table extends ExcelComponent {
 		return createTable(20);
 	}
 
-	onClick() {
-		// console.log('Table: onClick', event);
+	onClick(event) {
+		const cell = event.target;
+
+		if (event.target.matches('[data-id]')) {
+			if (event.shiftKey) {
+				this.selection.selectGroup(cell, this.root);
+			} else {
+				this.selection.select(cell);
+			}
+		}
 	}
 
 	onMousedown(event) {
-		mousedown.call(this, event);
+		mousedown.call(this, event);		
 	}
 
 	onMousemove(event) {
@@ -35,9 +43,14 @@ export class Table extends ExcelComponent {
 		mouseup.call(this);
 	}
 
+	prepare() {
+		this.selection = new TableSelection();
+	}
+
 	init() {
 		super.init();
 		
-		this.selection = new TableSelection();
+		const activeCell = this.root.el.querySelector('[data-id="A:1"]');
+		this.selection.select(activeCell);
 	}
 }

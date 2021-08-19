@@ -109,9 +109,12 @@
 		white-space: nowrap;
 		outline: none;
 		color: #000;
+		overflow: hidden;
 
 		&.selected {
 			outline: 1px solid #88b8ff;
+			position: relative;
+			z-index: 5;
 		}
 	}
 }

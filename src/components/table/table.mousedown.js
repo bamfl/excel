@@ -6,7 +6,7 @@ export function mousedown(event) {
     this.columnWidth = parseInt(getComputedStyle(this.column).width);
     this.positionXStart = event.clientX;
     this.column.querySelector('.column-resize').style.display = 'block';
-    this.getColIndex = this.column.firstChild.nodeValue.trim().charCodeAt() - 64;
+    this.getColIndex = this.column.firstChild.nodeValue.trim();
     this.cells = document.querySelectorAll(`[data-col="${this.getColIndex}"]`);
     this.cells.forEach((cell) => {
       cell.style.borderRight = '1px solid #88b8ff';
@@ -17,5 +17,5 @@ export function mousedown(event) {
     this.positionYStart = event.clientY;
     this.row.querySelector('.row-resize-line').style.display = 'block';
     this.row.querySelector('.row-resize').style.display = 'block';
-  }
+  }	
 }

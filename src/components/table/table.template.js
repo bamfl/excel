@@ -7,11 +7,15 @@ function getAtoZ(idx) {
 	return String.fromCharCode(CODES.A + idx);
 }
 
-function createCells(cellsCount) {
+function createCells(cellsCount, rowsCount) {
 	const cells = [];
 
 	for (let i = 0; i < cellsCount; i++) {
-		cells.push(`<div class="cell" data-col="${i + 1}" contenteditable></div>`);
+		cells.push(`
+			<div class="cell" 
+				data-col="${getAtoZ(i)}" 
+				data-id="${getAtoZ(i)}:${rowsCount}" contenteditable>
+			</div>`);
 	}
 
 	return cells.join('');	
@@ -55,7 +59,7 @@ export function createTable(rowsCount = 15) {
 	table += createRow('', () => createColumns(colsCount));
 
 	for (let i = 0; i < rowsCount; i++) {
-		table += createRow(i + 1, () => createCells(colsCount));		
+		table += createRow(i + 1, () => createCells(colsCount, i + 1));		
 	}
 
 	return table;
