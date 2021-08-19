@@ -11,7 +11,7 @@ export class Table extends ExcelComponent {
 	constructor(root) {
 		super(root, {
 			name: 'Table',
-			listeners: ['click', 'mousedown', 'mousemove', 'mouseup']
+			listeners: ['click', 'mousedown', 'mousemove', 'mouseup', 'keydown']
 		});
 	}
 
@@ -41,6 +41,22 @@ export class Table extends ExcelComponent {
 
 	onMouseup() {
 		mouseup.call(this);
+	}
+
+	onKeydown(event) {
+		if (event.shiftKey && event.key === 'Tab') {
+			event.preventDefault();
+			this.selection.selectOnLeft(this.root);
+		} else if (event.key === 'ArrowRight' || event.key === 'Tab') {
+			event.preventDefault();
+			this.selection.selectOnRight(this.root);
+		} else if (event.key === 'ArrowLeft') {
+			this.selection.selectOnLeft(this.root);
+		} else if (event.key === 'ArrowDown') {
+			this.selection.selectDown(this.root);
+		} else if (event.key === 'ArrowUp') {
+			this.selection.selectUp(this.root);
+		} 
 	}
 
 	prepare() {

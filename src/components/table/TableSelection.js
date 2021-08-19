@@ -8,65 +8,105 @@ export class TableSelection {
 
 		this.group = [];
 		this.group.push(el);
+		el.focus();
 
 		this.group.forEach(item => item.classList.add('selected'));
-
-		console.log(this.group);
 	}
 
 	selectGroup(cellEnd, root) {
-		const rowCurrent = (this.group[0].dataset.id).replace(/[^\d]/g, '');
-		const rowEnd = (cellEnd.dataset.id).replace(/[^\d]/g, '');
+		const startCellId = this.group[0].dataset.id;
+		const endCellId = cellEnd.dataset.id;
 
-		const currentId = this.group[0].dataset.id;
-		const cellEndId = cellEnd.dataset.id;
+		let rowStart = +(startCellId.slice(0, 1).charCodeAt());
+		let rowEnd = +(endCellId.slice(0, 1).charCodeAt());
+
+		if (rowStart > rowEnd) {
+			let oldRowStart = rowStart;
+			let oldRowEnd = rowEnd;
+
+			rowStart = oldRowEnd;
+			rowEnd = oldRowStart;
+		}
+
+		let colStart = +(startCellId.slice(2));
+		let colEnd = +(endCellId.slice(2));
+
+		if (colStart > colEnd) {
+			let oldColStart = colStart;
+			let oldColEnd = colEnd;
+
+			colStart = oldColEnd;
+			colEnd = oldColStart;
+		}
 
 		this.group = [];
-		
-		if (rowCurrent === rowEnd) {
-			let rowFrom = +(currentId.slice(0, 1).charCodeAt());
-			let rowTo = +(cellEndId.slice(0, 1).charCodeAt());
 
-			if (rowFrom > rowTo) {
-				let oldRowFrom = rowFrom;
-				let oldRowTo = rowTo;
-
-				rowFrom = oldRowTo;
-				rowTo = oldRowFrom;
-			}
-
-			const row = rowCurrent;
-
-			for (let i = rowFrom; i <= rowTo; i++) {
+		for (let i = rowStart; i <= rowEnd; i++) {			
+			for (let j = colStart; j <= colEnd; j++) {
 				const col = String.fromCharCode(i);
-				const el = root.el.querySelector(`[data-id="${col}:${row}"]`);
+				const row = j;
+
+				const el = root.el.querySelector(`[data-id="${col}:${row}"]`);				
 
 				this.group.push(el);
-			}
-		} else {
-			let colFrom = +(currentId.slice(2));
-			let colTo = +(cellEndId.slice(2));
-
-			if (colFrom > colTo) {
-				let oldColFrom = colFrom;
-				let oldColTo = colTo;
-
-				colFrom = oldColTo;
-				colTo = oldColFrom;
-			}
-
-			const col = currentId.slice(0, 1);
-
-			for (let i = colFrom; i <= colTo; i++) {
-				const row = i;
-
-				const el = root.el.querySelector(`[data-id="${col}:${row}"]`);
-
-				this.group.push(el);
+				this.group.forEach(item => item.classList.add('selected'));
 			}
 		}
+	}
+
+	selectOnRight(root) {
+		const currentCellId = this.group[0].dataset.id;
+		const currentColNum = currentCellId.slice(0, 1).charCodeAt();
+
+		const nextRow = currentCellId.slice(2);
+		const nextRol = String.fromCharCode(currentColNum + 1);
+
+		const el = root.el.querySelector(`[data-id="${nextRol}:${nextRow}"]`);
+
+		if (el) {
+			this.select(el);
+		}
+	}
+
+	selectOnLeft(root) {
+		const currentCellId = this.group[0].dataset.id;
+		const currentColNum = currentCellId.slice(0, 1).charCodeAt();
+
+		const nextRow = currentCellId.slice(2);		
+		const nextCol = String.fromCharCode(currentColNum - 1);
+
+		const el = root.el.querySelector(`[data-id="${nextCol}:${nextRow}"]`);
 		
-		this.group.forEach(item => item.classList.add('selected'));
-		console.log(this.group);
+		if (el) {
+			this.select(el);
+		}
+	}
+
+	selectDown(root) {
+		const currentCellId = this.group[0].dataset.id;
+		const currentRowNum = currentCellId.slice(2);
+
+		const nextRow = +currentRowNum + 1;
+		const nextCol = currentCellId.slice(0, 1);
+
+		const el = root.el.querySelector(`[data-id="${nextCol}:${nextRow}"]`);
+		
+		if (el) {
+			this.select(el);
+		}
+	}
+
+	selectUp(root) {
+		const currentCellId = this.group[0].dataset.id;
+		const currentRowNum = currentCellId.slice(2);
+
+		const nextRow = +currentRowNum - 1;
+		const nextCol = currentCellId.slice(0, 1);
+
+		const el = root.el.querySelector(`[data-id="${nextCol}:${nextRow}"]`);
+		
+		if (el) {
+			this.select(el);
+		}
 	}
 }
