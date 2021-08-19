@@ -11,6 +11,8 @@ export class TableSelection {
 		el.focus();
 
 		this.group.forEach(item => item.classList.add('selected'));
+		
+		console.log(this.group);
 	}
 
 	selectGroup(cellEnd, root) {
