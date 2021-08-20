@@ -8,10 +8,11 @@ import { TableSelection } from './TableSelection';
 export class Table extends ExcelComponent {
 	static className = 'excel__table';
 
-	constructor(root) {
+	constructor(root, options) {
 		super(root, {
 			name: 'Table',
-			listeners: ['click', 'mousedown', 'mousemove', 'mouseup']
+			listeners: ['click', 'mousedown', 'mousemove', 'mouseup', 'keydown', 'input'],
+			...options
 		});
 	}
 
@@ -29,6 +30,9 @@ export class Table extends ExcelComponent {
 				this.selection.select(cell);
 			}
 		}
+
+		const selectedCell = this.selection.group[0];
+		this.$emit('table:select', selectedCell);
 	}
 
 	onMousedown(event) {
@@ -43,6 +47,40 @@ export class Table extends ExcelComponent {
 		mouseup.call(this);
 	}
 
+	onKeydown(event) {
+		if (event.shiftKey && event.key === 'Tab') {
+			event.preventDefault();
+			this.selection.selectOnLeft(this.root);
+
+		} else if (event.key === 'ArrowRight' || event.key === 'Tab') {
+			event.preventDefault();
+			this.selection.selectOnRight(this.root);
+			
+
+		} else if (event.shiftKey && event.key === 'Enter') {
+			return;
+			
+		}	else if (event.key === 'Enter') {
+			event.preventDefault();
+			this.selection.selectDown(this.root);
+			
+		} else if (event.key === 'ArrowLeft') {
+			this.selection.selectOnLeft(this.root);
+		} else if (event.key === 'ArrowDown') {
+			this.selection.selectDown(this.root);
+		} else if (event.key === 'ArrowUp') {
+			this.selection.selectUp(this.root);
+		}
+
+		const selectedCell = this.selection.group[0];
+		this.$emit('table:select', selectedCell);
+	}
+
+	onInput(event) {
+		const text = event.target.textContent;
+		this.$emit('table:input', text);
+	}
+
 	prepare() {
 		this.selection = new TableSelection();
 	}
@@ -52,5 +90,16 @@ export class Table extends ExcelComponent {
 		
 		const activeCell = this.root.el.querySelector('[data-id="A:1"]');
 		this.selection.select(activeCell);
+
+		this.$on('formula:input', text => {
+			this.selection.group[0].textContent = text;
+		});
+
+		this.$on('formula:done', () => {
+			this.selection.select(this.selection.group[0]);
+		});
+
+		const selectedCell = this.selection.group[0];
+		this.$emit('table:select', selectedCell);
 	}
 }
