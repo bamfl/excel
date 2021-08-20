@@ -8,10 +8,11 @@ import { TableSelection } from './TableSelection';
 export class Table extends ExcelComponent {
 	static className = 'excel__table';
 
-	constructor(root) {
+	constructor(root, options) {
 		super(root, {
 			name: 'Table',
-			listeners: ['click', 'mousedown', 'mousemove', 'mouseup', 'keydown']
+			listeners: ['click', 'mousedown', 'mousemove', 'mouseup', 'keydown', 'input'],
+			...options
 		});
 	}
 
@@ -29,6 +30,9 @@ export class Table extends ExcelComponent {
 				this.selection.select(cell);
 			}
 		}
+
+		const selectedCell = this.selection.group[0];
+		this.$emit('table:select', selectedCell);
 	}
 
 	onMousedown(event) {
@@ -66,7 +70,15 @@ export class Table extends ExcelComponent {
 			this.selection.selectDown(this.root);
 		} else if (event.key === 'ArrowUp') {
 			this.selection.selectUp(this.root);
-		} 
+		}
+
+		const selectedCell = this.selection.group[0];
+		this.$emit('table:select', selectedCell);
+	}
+
+	onInput(event) {
+		const text = event.target.textContent;
+		this.$emit('table:input', text);
 	}
 
 	prepare() {
@@ -78,5 +90,16 @@ export class Table extends ExcelComponent {
 		
 		const activeCell = this.root.el.querySelector('[data-id="A:1"]');
 		this.selection.select(activeCell);
+
+		this.$on('formula:input', text => {
+			this.selection.group[0].textContent = text;
+		});
+
+		this.$on('formula:done', () => {
+			this.selection.select(this.selection.group[0]);
+		});
+
+		const selectedCell = this.selection.group[0];
+		this.$emit('table:select', selectedCell);
 	}
 }

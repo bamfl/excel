@@ -6,12 +6,12 @@ export class Emitter {
 	// dispatch, fire, trigger
 	// Уведомляем слушателей, если они есть. emit - испускать
 	// table.emit('table:select', {a: 1})
-	emit(event, ...args) {
-		if (!Array.isArray(this.listeners[event])) {
+	emit(eventName, ...args) {
+		if (!Array.isArray(this.listeners[eventName])) {
 			return false;
 		}
 
-		this.listeners[event].forEach(listener => {
+		this.listeners[eventName].forEach(listener => {
 			listener(...args);
 		});
 
@@ -21,12 +21,12 @@ export class Emitter {
 	// on, listen
 	// Подписываемся на испускаемые уведомления
 	// formula.subscribe('table:select', () => {})
-	subscribe(event, fn) {
-		this.listeners[event] = this.listeners[event] || [];
-		this.listeners[event].push(fn);
+	subscribe(eventName, fn) {
+		this.listeners[eventName] = this.listeners[eventName] || [];
+		this.listeners[eventName].push(fn);
 
 		return () => {
-			this.listeners[event] = this.listeners[event].filter(listener => listener !== fn);
+			this.listeners[eventName] = this.listeners[eventName].filter(listener => listener !== fn);
 		};
 	}
 }

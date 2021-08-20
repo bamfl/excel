@@ -3,10 +3,11 @@ import { ExcelComponent } from "../../core/ExcelComponent";
 export class Formula extends ExcelComponent {
 	static className = 'excel__formula';
 
-	constructor(root) {
+	constructor(root, options) {
 		super(root, {
 			name: 'Formula',
-			listeners: ['input', 'click']
+			listeners: ['input', 'keydown'],
+			...options
 		});
 	}
 	
@@ -18,10 +19,35 @@ export class Formula extends ExcelComponent {
 	}
 
 	onInput(event) {
-		console.log('Formula: onInput', event.target.value);
+		const text = event.target.value;
+		this.$emit('formula:input', text);
 	}
 
-	onClick() {
-		console.log('Formula: onClick');
+	onKeydown(event) {
+		if(event.key === 'Enter') {
+			event.preventDefault();
+
+			const inputEl = this.root.el.querySelector('input');
+			inputEl.blur();
+			this.$emit('formula:done');
+		}
+
+		if (event.key === 'Tab') {
+			event.preventDefault();
+		}
+	}
+
+	init() {
+		super.init();
+
+		this.$on('table:input', (text) => {
+			const inputEl = this.root.el.querySelector('input');
+			inputEl.value = text;
+		});
+
+		this.$on('table:select', (selectedCell) => {
+			const inputEl = this.root.el.querySelector('input');
+			inputEl.value = selectedCell.textContent;
+		});
 	}
 }
