@@ -49,5 +49,9 @@ export class Formula extends ExcelComponent {
 			const inputEl = this.root.el.querySelector('input');
 			inputEl.value = selectedCell.textContent.trim();
 		});
+
+		this.$subscribe(state => {
+			console.log('FormulaState', state);
+		});
 	}
 }

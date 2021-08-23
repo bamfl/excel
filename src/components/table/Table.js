@@ -33,6 +33,7 @@ export class Table extends ExcelComponent {
 
 		const selectedCell = this.selection.group[0];
 		this.$emit('table:select', selectedCell);
+		this.$dispatch({type: 'TEST'});
 	}
 
 	onMousedown(event) {
@@ -101,5 +102,9 @@ export class Table extends ExcelComponent {
 
 		const selectedCell = this.selection.group[0];
 		this.$emit('table:select', selectedCell);
+
+		this.$subscribe(state => {
+			console.log('TableState', state);
+		});
 	}
 }
