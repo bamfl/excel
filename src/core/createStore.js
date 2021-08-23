@@ -1,7 +1,7 @@
 import { rootReducer } from '../redux/rootReducer';
 
 // export function createStore(rootReducer, initialState = {}) {
-// 	let state = rootReducer({ ...initialState }, { type: '__INIT__'} );
+// 	let state = rootReducer({ ...initialState }, { type: '##INIT##'} );
 // 	let listeners = [];
 
 // 	return {
@@ -23,23 +23,26 @@ import { rootReducer } from '../redux/rootReducer';
 // }
 
 export class CreateStore {
+	#state;
+	#listeners;
+
 	constructor(rootReducer, initialState = {}) {
-		this._state = rootReducer({ ...initialState }, { type: '__INIT__'} );
-		this._listeners = [];
+		this.#state = rootReducer({ ...initialState }, { type: '##INIT##'} );
+		this.#listeners = [];
 	}
 
 	subscribe(fn) {
-		this._listeners.push(fn);
+		this.#listeners.push(fn);
 
-		return () => this._listeners = this._listeners.filter(listener => listener !== fn);
+		return () => this.#listeners = this.#listeners.filter(listener => listener !== fn);
 	}
 
 	dispatch(action) {
-		this._state = rootReducer(this._state, action);
-		this._listeners.forEach(listener => listener(this._state));
+		this.#state = rootReducer(this.#state, action);
+		this.#listeners.forEach(listener => listener(this.#state));
 	}
 
 	showStore() {
-		return this._state;
+		return this.#state;
 	}
 }
