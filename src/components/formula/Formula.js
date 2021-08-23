@@ -20,7 +20,7 @@ export class Formula extends ExcelComponent {
 
 	onInput(event) {
 		const text = event.target.value;
-		this.$emit('formula:input', text);
+		this.$emit('formula:input', text.trim());
 	}
 
 	onKeydown(event) {
@@ -42,12 +42,12 @@ export class Formula extends ExcelComponent {
 
 		this.$on('table:input', (text) => {
 			const inputEl = this.root.el.querySelector('input');
-			inputEl.value = text;
+			inputEl.value = text.trim();
 		});
 
 		this.$on('table:select', (selectedCell) => {
 			const inputEl = this.root.el.querySelector('input');
-			inputEl.value = selectedCell.textContent;
+			inputEl.value = selectedCell.textContent.trim();
 		});
 	}
 }

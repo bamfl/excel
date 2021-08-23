@@ -78,7 +78,7 @@ export class Table extends ExcelComponent {
 
 	onInput(event) {
 		const text = event.target.textContent;
-		this.$emit('table:input', text);
+		this.$emit('table:input', text.trim());
 	}
 
 	prepare() {
@@ -92,7 +92,7 @@ export class Table extends ExcelComponent {
 		this.selection.select(activeCell);
 
 		this.$on('formula:input', text => {
-			this.selection.group[0].textContent = text;
+			this.selection.group[0].textContent = text.trim();
 		});
 
 		this.$on('formula:done', () => {
