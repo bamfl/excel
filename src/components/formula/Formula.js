@@ -1,57 +1,67 @@
-import { ExcelComponent } from "../../core/ExcelComponent";
+import { ExcelComponent } from '../../core/ExcelComponent';
+import * as actions from '../../redux/actions';
 
 export class Formula extends ExcelComponent {
-	static className = 'excel__formula';
+  static className = 'excel__formula';
 
-	constructor(root, options) {
-		super(root, {
-			name: 'Formula',
-			listeners: ['input', 'keydown'],
-			...options
-		});
-	}
-	
-	toHTML() {
-		return `
+  constructor(root, options) {
+    super(root, {
+      name: 'Formula',
+      listeners: ['input', 'keydown'],
+      ...options,
+    });
+  }
+
+  toHTML() {
+    return `
 			<div class="icon">fx</div>
 			<input class="input" />
 		`;
-	}
+  }
 
-	onInput(event) {
-		const text = event.target.value;
-		this.$emit('formula:input', text.trim());
-	}
+  onInput(event) {
+    const text = event.target.value;
+    this.$emit('formula:input', text.trim());
 
-	onKeydown(event) {
-		if(event.key === 'Enter') {
-			event.preventDefault();
+    const cellID = this.selectedCell.dataset.id;
+    const cellValue = text;
 
-			const inputEl = this.root.el.querySelector('input');
-			inputEl.blur();
-			this.$emit('formula:done');
-		}
+    const dataCell = {
+      id: cellID,
+      value: cellValue,
+    };
 
-		if (event.key === 'Tab') {
-			event.preventDefault();
-		}
-	}
+		this.$dispatch(actions.cellInput(dataCell));
+  }
 
-	init() {
-		super.init();
+  onKeydown(event) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
 
-		this.$on('table:input', (text) => {
-			const inputEl = this.root.el.querySelector('input');
-			inputEl.value = text.trim();
-		});
+      const inputEl = this.root.el.querySelector('input');
+      inputEl.blur();
+      this.$emit('formula:done');
+    }
 
-		this.$on('table:select', (selectedCell) => {
-			const inputEl = this.root.el.querySelector('input');
-			inputEl.value = selectedCell.textContent.trim();
-		});
+    if (event.key === 'Tab') {
+      event.preventDefault();
+    }
+  }
 
-		// this.$subscribe(state => {
-		// 	console.log('Formula', state);
-		// });
-	}
+  init() {
+    super.init();
+
+    this.$on('table:input', (text) => {
+      const inputEl = this.root.el.querySelector('input');
+      inputEl.value = text.trim();
+    });
+
+    this.$on('table:select', (selectedCell) => {
+      this.selectedCell = selectedCell;
+      const inputEl = this.root.el.querySelector('input');
+			console.log(this.selectedCell.textContent.trim());
+      inputEl.value = this.selectedCell.textContent.trim();
+
+    });
+  }
 }

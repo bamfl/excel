@@ -40,7 +40,7 @@ function createColumns(colsCount) {
 
 function createRow(num, cbFn) {
 	return `
-		<div class="row" data-type="resizable">
+		<div class="row" data-type="resizable" data-row="${num}">
 			<div class="row-info">
 				${num}
 				${num ? `<div class="row-resize"></div>` : ''}
@@ -51,7 +51,7 @@ function createRow(num, cbFn) {
 	`;
 }
 
-export function createTable(rowsCount = 15) {
+export function createTable(rowsCount = 15, store = {}) {
 	const colsCount = CODES.Z - CODES.A + 1;
 
 	let table = '';
