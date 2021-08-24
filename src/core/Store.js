@@ -16,25 +16,20 @@ import { rootReducer } from '../redux/rootReducer';
 // 			listeners.forEach(listener => listener(state));
 // 		},
 
-// 		showStore() {
+// 		getState() {
 // 			return state;
 // 		}
 // 	};
 // }
 
-export class CreateStore {
+// Extra task
+export class Store {
 	#state;
 	#listeners;
 
 	constructor(rootReducer, initialState = {}) {
-		this.#state = rootReducer({ ...initialState }, { type: '##INIT##'} );
+		this.#state = rootReducer({ ...initialState }, { type: '__INIT__'} );
 		this.#listeners = [];
-	}
-
-	subscribe(fn) {
-		this.#listeners.push(fn);
-
-		return () => this.#listeners = this.#listeners.filter(listener => listener !== fn);
 	}
 
 	dispatch(action) {
@@ -42,7 +37,13 @@ export class CreateStore {
 		this.#listeners.forEach(listener => listener(this.#state));
 	}
 
-	showStore() {
+	subscribe(fn) {
+		this.#listeners.push(fn);
+
+		return () => this.#listeners = this.#listeners.filter(listener => listener !== fn);
+	}	
+
+	getState() {
 		return this.#state;
 	}
 }

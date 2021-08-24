@@ -1,3 +1,15 @@
-export function rootReducer(store, action) {
-	return store;
+import { TABLE_RESIZE } from "./types";
+
+// Pure function
+export function rootReducer(state, action) {
+	let prevColState;
+
+	switch (action.type) {
+		case TABLE_RESIZE: 
+			prevColState = state.colState || {};
+			prevColState[action.data.id] = action.data.value;
+			return {...state, colState: prevColState};
+
+		default: return state;
+	}
 }

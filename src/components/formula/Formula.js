@@ -50,8 +50,8 @@ export class Formula extends ExcelComponent {
 			inputEl.value = selectedCell.textContent.trim();
 		});
 
-		this.$subscribe(state => {
-			console.log('FormulaState', state);
-		});
+		// this.$subscribe(state => {
+		// 	console.log('Formula', state);
+		// });
 	}
 }

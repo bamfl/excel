@@ -26,8 +26,8 @@ function createColumns(colsCount) {
 
 	for (let i = 0; i < colsCount; i++) {
 		columns.push(`
-			<div class="column" data-type="resizable">
-				${getAtoZ(i)}
+			<div class="column" data-type="resizable" data-col="${getAtoZ(i)}">
+				${getAtoZ(i)}		
 				<div class="column-resize">
 					<div class="column-resize-line"></div>
 				</div>
