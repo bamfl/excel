@@ -53,8 +53,12 @@ body {
 			color: rgb(165, 163, 163);
 		}
 
-		&:active {
-			color: #000;
+		&.active {
+			color: #fff;
+			span {
+				background-color: #1F7645;
+				border-radius: 5px;
+			}
 		}
 
 		&-white {
