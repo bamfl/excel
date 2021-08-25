@@ -144,7 +144,7 @@ export class Table extends ExcelComponent {
     });
 
     const selectedCell = this.selection.group[0];
-    this.$emit('table:select', selectedCell);
+    this.$emit('table:select', selectedCell, selectedCell.textContent);
 
     this.onStoreLoad();
   }

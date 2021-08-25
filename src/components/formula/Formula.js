@@ -56,12 +56,10 @@ export class Formula extends ExcelComponent {
       inputEl.value = text.trim();
     });
 
-    this.$on('table:select', (selectedCell) => {
-      this.selectedCell = selectedCell;
+    this.$on('table:select', async (selectedCell) => {
+      this.selectedCell = await selectedCell;
       const inputEl = this.root.el.querySelector('input');
-			console.log(this.selectedCell.textContent.trim());
       inputEl.value = this.selectedCell.textContent.trim();
-
     });
   }
 }
