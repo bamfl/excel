@@ -24,7 +24,7 @@ export class Header extends ExcelComponent {
 	}
 
 	getTableName() {
-		return this.store.getState().headerState.name || '';
+		return this.store.getState().headerState ? this.store.getState().headerState.name : '';
 	}
 
 	onInput(event) {

@@ -120,7 +120,7 @@ export class Table extends ExcelComponent {
 
       cellKeys.forEach((key) => {
         const cell = document.querySelector(`[data-id="${key}"]`);
-        cell.textContent = changedCells[key];
+        cell.textContent = changedCells[key].text;
       });
     }
   }
@@ -144,7 +144,7 @@ export class Table extends ExcelComponent {
     });
 
     const selectedCell = this.selection.group[0];
-    this.$emit('table:select', selectedCell, selectedCell.textContent);
+    this.$emit('table:select', selectedCell);
 
     this.onStoreLoad();
   }
