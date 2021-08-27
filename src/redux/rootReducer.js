@@ -2,7 +2,7 @@ import { 	ROW_RESIZE , COL_RESIZE, CELL_INPUT, HEADER_INPUT, TOOLBAR_INPUT } fro
 
 // Pure function
 export function rootReducer(state, action) {
-	let prevColState, prevRowState, prevCellState, prevHeaderState, prevToolbarState;
+	let prevColState, prevRowState, prevCellState, prevHeaderState;
 
 	switch (action.type) {
 		case COL_RESIZE: 

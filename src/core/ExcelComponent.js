@@ -28,8 +28,8 @@ export class ExcelComponent extends DOMListener {
 		this.store.dispatch(action);
 	}
 
-	$subscribe(callback) {
-		this.storeSub = this.store.subscribe(callback);
+	$subscribe(fn) {
+		this.storeSub = this.store.subscribe(fn);
 	}
 
 	prepare() {}

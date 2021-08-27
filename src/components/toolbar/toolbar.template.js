@@ -17,7 +17,7 @@ const buttons = [
 	{
 		name: 'format_bold',
 		active: false,
-		value: {'font-weight': 'bold'}
+		value: {'font-weight': 900}
 	},
 	{
 		name: 'format_italic',

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,700;1,400&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;900&display=swap');
 @import "~normalize.css";
 
 *,
@@ -45,6 +45,10 @@ body {
 		justify-content: center;
 		align-items: center;
 
+		-moz-user-select: none;
+		-khtml-user-select: none;
+		user-select: none;
+
 		& + .btn {
 			margin-left: 15px;
 		}
@@ -56,7 +60,7 @@ body {
 		&.active {
 			color: #fff;
 			span {
-				background-color: #1F7645;
+				background-color: #1f7645;
 				border-radius: 5px;
 			}
 		}

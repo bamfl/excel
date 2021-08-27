@@ -33,15 +33,21 @@ export class Toolbar extends ExcelComponent {
 		if (event.target.classList.contains('material-icons')) {
 			const toolbarObj = JSON.parse(event.target.dataset.value);
 			const tollbarDataKey = Object.keys(toolbarObj)[0];
-			const toolbarValue = toolbarObj[tollbarDataKey];
+			let toolbarValue = toolbarObj[tollbarDataKey];
+
+			if (tollbarDataKey === 'font-weight' && event.target.parentElement.classList.contains('active')) {
+				toolbarValue = '';
+			} else if (tollbarDataKey === 'font-style' && event.target.parentElement.classList.contains('active')) {
+				toolbarValue = '';
+			} else if (tollbarDataKey === 'text-decoration' && event.target.parentElement.classList.contains('active')) {
+				toolbarValue = '';
+			}
 
 			const tollbarData = {
 				id: this.selectedCell.dataset.id,
 				prop: tollbarDataKey,
 				value: toolbarValue
 			};
-
-			console.log(tollbarData);
 
 			this.$dispatch(actions.toolbarInput(tollbarData));
 			this.getToolbarStateFromCell();

@@ -5,6 +5,7 @@ import { mouseup } from './table.mouseup';
 import { createTable } from './table.template';
 import { TableSelection } from './TableSelection';
 import * as actions from '../../redux/actions';
+import { TOOLBAR_INPUT } from '../../redux/types';
 
 export class Table extends ExcelComponent {
   static className = 'excel__table';
@@ -125,6 +126,25 @@ export class Table extends ExcelComponent {
     }
   }
 
+	onTollbarStylesChange() {
+		const changedCells = this.store.getState().cellState;
+
+    if (changedCells) {
+      const cellKeys = Object.keys(changedCells);
+
+      cellKeys.forEach((key) => {
+        const cell = document.querySelector(`[data-id="${key}"]`);
+				const cellStyles = changedCells[key];
+
+				Object.keys(cellStyles).forEach(cssStyle => {
+					if (cssStyle !== 'text') {
+						cell.style[cssStyle] = cellStyles[cssStyle];
+					}
+				});
+      });
+    }
+	}
+
   prepare() {
     this.selection = new TableSelection();
   }
@@ -147,5 +167,10 @@ export class Table extends ExcelComponent {
     this.$emit('table:select', selectedCell);
 
     this.onStoreLoad();
+		this.onTollbarStylesChange();
+
+
+		const toolSub = this.$subscribe(actions.toolbarInput);
+		console.log(toolSub);
   }
 }
