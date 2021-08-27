@@ -19,7 +19,7 @@ export function rootReducer(state, action) {
 
 		case CELL_INPUT:
 			prevCellState = state.cellState || {};
-			prevCellState[action.data.id] = {text: action.data.value};
+			prevCellState[action.data.id] = {...prevCellState[action.data.id], text: action.data.value};
 
 			return {...state, cellState: prevCellState};
 
