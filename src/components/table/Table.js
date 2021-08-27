@@ -170,7 +170,8 @@ export class Table extends ExcelComponent {
 		this.onTollbarStylesChange();
 
 
-		const toolSub = this.$subscribe(actions.toolbarInput);
-		console.log(toolSub);
+		this.$subscribe(() => {
+			this.onTollbarStylesChange();
+		});
   }
 }
