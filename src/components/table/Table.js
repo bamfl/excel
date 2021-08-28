@@ -5,8 +5,6 @@ import { mouseup } from './table.mouseup';
 import { createTable } from './table.template';
 import { TableSelection } from './TableSelection';
 import * as actions from '../../redux/actions';
-import { TOOLBAR_INPUT } from '../../redux/types';
-
 export class Table extends ExcelComponent {
   static className = 'excel__table';
 
@@ -28,13 +26,15 @@ export class Table extends ExcelComponent {
     if (event.target.matches('[data-id]')) {
       if (event.shiftKey) {
         this.selection.selectGroup(cell, this.root);
+
+        const selectedGroup = this.selection.group;
+        this.$emit('table:selectedgroup', selectedGroup);
       } else {
         this.selection.select(cell);
+				const selectedCell = this.selection.group[0];
+				this.$emit('table:select', selectedCell);
       }
     }
-
-    const selectedCell = this.selection.group[0];
-    this.$emit('table:select', selectedCell);
   }
 
   onMousedown(event) {
@@ -50,27 +50,42 @@ export class Table extends ExcelComponent {
   }
 
   onKeydown(event) {
+    let selectedCell;
+
     if (event.shiftKey && event.key === 'Tab') {
       event.preventDefault();
       this.selection.selectOnLeft(this.root);
+      selectedCell = this.selection.group[0];
+      this.$emit('table:select', selectedCell);
     } else if (event.key === 'ArrowRight' || event.key === 'Tab') {
       event.preventDefault();
       this.selection.selectOnRight(this.root);
+      selectedCell = this.selection.group[0];
+      this.$emit('table:select', selectedCell);
     } else if (event.shiftKey && event.key === 'Enter') {
+      selectedCell = this.selection.group[0];
+      this.$emit('table:select', selectedCell);
       return;
     } else if (event.key === 'Enter') {
       event.preventDefault();
+      selectedCell = this.selection.group[0];
+      this.$emit('table:select', selectedCell);
       this.selection.selectDown(this.root);
+      selectedCell = this.selection.group[0];
+      this.$emit('table:select', selectedCell);
     } else if (event.key === 'ArrowLeft') {
       this.selection.selectOnLeft(this.root);
+      selectedCell = this.selection.group[0];
+      this.$emit('table:select', selectedCell);
     } else if (event.key === 'ArrowDown') {
       this.selection.selectDown(this.root);
+      selectedCell = this.selection.group[0];
+      this.$emit('table:select', selectedCell);
     } else if (event.key === 'ArrowUp') {
       this.selection.selectUp(this.root);
+      selectedCell = this.selection.group[0];
+      this.$emit('table:select', selectedCell);
     }
-
-    const selectedCell = this.selection.group[0];
-    this.$emit('table:select', selectedCell);
   }
 
   onInput(event) {
@@ -126,24 +141,24 @@ export class Table extends ExcelComponent {
     }
   }
 
-	onTollbarStylesChange() {
-		const changedCells = this.store.getState().cellState;
+  onTollbarStylesChange() {
+    const changedCells = this.store.getState().cellState;
 
     if (changedCells) {
       const cellKeys = Object.keys(changedCells);
 
       cellKeys.forEach((key) => {
         const cell = document.querySelector(`[data-id="${key}"]`);
-				const cellStyles = changedCells[key];
+        const cellStyles = changedCells[key];
 
-				Object.keys(cellStyles).forEach(cssStyle => {
-					if (cssStyle !== 'text') {
-						cell.style[cssStyle] = cellStyles[cssStyle];
-					}
-				});
+        Object.keys(cellStyles).forEach((cssStyle) => {
+          if (cssStyle !== 'text') {
+            cell.style[cssStyle] = cellStyles[cssStyle];
+          }
+        });
       });
     }
-	}
+  }
 
   prepare() {
     this.selection = new TableSelection();
@@ -167,11 +182,10 @@ export class Table extends ExcelComponent {
     this.$emit('table:select', selectedCell);
 
     this.onStoreLoad();
-		this.onTollbarStylesChange();
+    this.onTollbarStylesChange();
 
-
-		this.$subscribe(() => {
-			this.onTollbarStylesChange();
-		});
+    this.$subscribe(() => {
+      this.onTollbarStylesChange();
+    });
   }
 }

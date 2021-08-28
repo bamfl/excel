@@ -18,8 +18,8 @@ export class Toolbar extends ExcelComponent {
 		return createToolbar();
 	}
 
-	getToolbarStateFromCell() {
-		const selectedCellID = this.selectedCell.dataset.id;
+	getToolbarStateFromCell(selectedCell) {
+		const selectedCellID = selectedCell.dataset.id;
 
 		if (this.store.getState().cellState) {
 			const selectedCellState =  this.store.getState().cellState[selectedCellID];	
@@ -43,14 +43,31 @@ export class Toolbar extends ExcelComponent {
 				toolbarValue = '';
 			}
 
-			const tollbarData = {
-				id: this.selectedCell.dataset.id,
-				prop: tollbarDataKey,
-				value: toolbarValue
-			};
-
-			this.$dispatch(actions.toolbarInput(tollbarData));
-			this.getToolbarStateFromCell();
+			if (this.selectedGroup) {
+				this.selectedGroup.forEach(selectedCellFromGroup => {
+					const selectedCell = selectedCellFromGroup;
+		
+					const tollbarData = {
+						id: selectedCell.dataset.id,
+						prop: tollbarDataKey,
+						value: toolbarValue
+					};
+		
+					this.$dispatch(actions.toolbarInput(tollbarData));
+					this.getToolbarStateFromCell(selectedCell);
+				});
+			} else {
+				const selectedCell = this.selectedCell;
+	
+				const tollbarData = {
+					id: selectedCell.dataset.id,
+					prop: tollbarDataKey,
+					value: toolbarValue
+				};
+	
+				this.$dispatch(actions.toolbarInput(tollbarData));
+				this.getToolbarStateFromCell(selectedCell);
+			}
 		}
 	}
 
@@ -58,8 +75,13 @@ export class Toolbar extends ExcelComponent {
 		super.init();
 
 		this.$on('table:select', async (selectedCell) => {
-      this.selectedCell = await selectedCell;			
-			this.getToolbarStateFromCell();
+      this.selectedCell = await selectedCell;
+			this.selectedGroup = null;		
+			this.getToolbarStateFromCell(this.selectedCell);
+    });
+
+		this.$on('table:selectedgroup', async (selectedGroup) => {
+      this.selectedGroup = await selectedGroup;
     });
 	}
 }
