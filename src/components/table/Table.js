@@ -89,8 +89,18 @@ export class Table extends ExcelComponent {
   }
 
   onInput(event) {
-    const text = event.target.textContent;
-    this.$emit('table:input', text.trim());
+    let text = event.target.textContent;
+
+		if (text.startsWith('=')) {
+			text = eval(text.slice(1));
+			console.log(text);
+		}
+
+		if (typeof text === 'string') {
+			text = text.trim();
+		}
+
+    this.$emit('table:input', text);
 
     const cellID = event.target.dataset.id;
     const cellValue = text;
@@ -171,7 +181,11 @@ export class Table extends ExcelComponent {
     this.selection.select(activeCell);
 
     this.$on('formula:input', (text) => {
-      this.selection.group[0].textContent = text.trim();
+			if (typeof text === 'string') {
+				text = text.trim();
+			}
+
+      this.selection.group[0].textContent = text;
     });
 
     this.$on('formula:done', () => {

@@ -13,3 +13,16 @@ export function storage(key, data = null) {
 
 	localStorage.setItem(key, JSON.stringify(data));
 }
+
+export function debounce(fn, wait) {
+	let timeout;
+
+	return function(...args) {
+		const later = () => {
+			clearTimeout(timeout)
+			fn.apply(this, args);
+		};
+		clearTimeout(timeout);
+		timeout = setTimeout(later, wait);	
+	};
+}

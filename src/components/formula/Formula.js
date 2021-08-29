@@ -20,8 +20,19 @@ export class Formula extends ExcelComponent {
   }
 
   onInput(event) {
-    const text = event.target.value;
-    this.$emit('formula:input', text.trim());
+    let text = event.target.value;
+
+		if (text.startsWith('=')) {
+			try {
+				text = eval(text.slice(1));				
+			} catch (error) {}
+		}
+
+		if (typeof text === 'string') {
+			text = text.trim();
+		}
+
+    this.$emit('formula:input', text);
 
     const cellID = this.selectedCell.dataset.id;
     const cellValue = text;
@@ -53,7 +64,12 @@ export class Formula extends ExcelComponent {
 
     this.$on('table:input', (text) => {
       const inputEl = this.root.el.querySelector('input');
-      inputEl.value = text.trim();
+
+			if (typeof inputEl.value === 'string') {
+				inputEl.value = inputEl.value.trim();
+			}
+
+      inputEl.value = text;
     });
 
     this.$on('table:select', async (selectedCell) => {

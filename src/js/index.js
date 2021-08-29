@@ -16,9 +16,11 @@ import { storage } from '../core/utils';
 
 const store = new Store(rootReducer, storage('excel-state'));
 
-store.subscribe(state => {
+const stateListener = state => {
 	storage('excel-state', state);
-});
+};
+
+store.subscribe(stateListener);
 
 const excelApp = new Excel('#app', {
 	components: [
