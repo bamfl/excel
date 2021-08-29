@@ -26,8 +26,8 @@ function createColumns(colsCount) {
 
 	for (let i = 0; i < colsCount; i++) {
 		columns.push(`
-			<div class="column" data-type="resizable">
-				${getAtoZ(i)}
+			<div class="column" data-type="resizable" data-col="${getAtoZ(i)}">
+				${getAtoZ(i)}		
 				<div class="column-resize">
 					<div class="column-resize-line"></div>
 				</div>
@@ -40,7 +40,7 @@ function createColumns(colsCount) {
 
 function createRow(num, cbFn) {
 	return `
-		<div class="row" data-type="resizable">
+		<div class="row" data-type="resizable" data-row="${num}">
 			<div class="row-info">
 				${num}
 				${num ? `<div class="row-resize"></div>` : ''}
@@ -51,7 +51,7 @@ function createRow(num, cbFn) {
 	`;
 }
 
-export function createTable(rowsCount = 15) {
+export function createTable(rowsCount = 15, store = {}) {
 	const colsCount = CODES.Z - CODES.A + 1;
 
 	let table = '';
