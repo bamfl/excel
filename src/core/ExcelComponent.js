@@ -1,4 +1,6 @@
 import { DOMListener } from "./DOMListener";
+import * as actions from '../redux/actions';
+
 
 export class ExcelComponent extends DOMListener {
 	constructor(root, options = {}) {
@@ -36,6 +38,8 @@ export class ExcelComponent extends DOMListener {
 
 	init() {
 		this.addDOMListeners();
+		const openDate = new Date().toLocaleString();
+		this.$dispatch(actions.openTable(openDate));
 	}
 
 	destroy() {

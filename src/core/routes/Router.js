@@ -23,7 +23,7 @@ export class Router {
 
     const activePageHash = ActiveRoute.path;
 
-		const Page = (activePageHash.startsWith('excel')) ? this.routes.excel : this.routes.dashboard;
+		const Page = (activePageHash.startsWith('excel/')) ? this.routes.excel : this.routes.dashboard;
 		this.page = new Page(ActiveRoute.param);
 
 		this.appElement.append(this.page.getRoot());

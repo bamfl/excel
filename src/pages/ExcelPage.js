@@ -14,11 +14,10 @@ export class ExcelPage extends Page {
   }
 
   getRoot() {
-		console.log(this.params);
-    const store = new Store(rootReducer, storage('excel-state'));
+    const store = new Store(rootReducer, storage(`excel:${this.params}`));
 
     const stateListener = (state) => {
-      storage('excel-state', state);
+      storage(`excel:${this.params}`, state);
     };
 
     store.subscribe(stateListener);
