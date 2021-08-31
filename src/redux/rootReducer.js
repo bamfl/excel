@@ -1,8 +1,8 @@
-import { 	ROW_RESIZE , COL_RESIZE, CELL_INPUT, HEADER_INPUT, TOOLBAR_INPUT } from "./types";
+import { 	ROW_RESIZE , COL_RESIZE, CELL_INPUT, HEADER_INPUT, TOOLBAR_INPUT, OPEN_TABLE } from "./types";
 
 // Pure function
 export function rootReducer(state, action) {
-	let prevColState, prevRowState, prevCellState, prevHeaderState;
+	let prevColState, prevRowState, prevCellState, prevHeaderState, prevTimeState;
 
 	switch (action.type) {
 		case COL_RESIZE: 
@@ -34,6 +34,12 @@ export function rootReducer(state, action) {
 			prevCellState[action.data.id] = {...prevCellState[action.data.id], [action.data.prop]: action.data.value};
 
 			return {...state, cellState: prevCellState};
+
+			case OPEN_TABLE:
+				prevTimeState = state.timeState || {};
+				prevTimeState.time = action.data;
+	
+				return {...state, timeState: prevTimeState};
 
 		default: return state;
 	}

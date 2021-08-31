@@ -1,4 +1,4 @@
-import { COL_RESIZE, ROW_RESIZE, CELL_INPUT, HEADER_INPUT, TOOLBAR_INPUT } from "./types";
+import { COL_RESIZE, ROW_RESIZE, CELL_INPUT, HEADER_INPUT, TOOLBAR_INPUT, OPEN_TABLE } from "./types";
 
 // Action creator
 export function colResize(data) {
@@ -32,6 +32,13 @@ export function headerInput(data) {
 export function toolbarInput(data) {
 	return {
 		type: TOOLBAR_INPUT,
+		data
+	};
+}
+
+export function openTable(data) {
+	return {
+		type: OPEN_TABLE,
 		data
 	};
 }

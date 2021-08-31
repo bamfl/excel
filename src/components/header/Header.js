@@ -1,11 +1,12 @@
 import { ExcelComponent } from '../../core/ExcelComponent';
+import { ActiveRoute } from '../../core/routes/ActiveRoute';
 import * as actions from '../../redux/actions';
 
 export class Header extends ExcelComponent {
 	constructor(root, options) {
 		super(root, {
 			name: 'Header',
-			listeners: ['input'],
+			listeners: ['input', 'click'],
 			...options
 		});
 	}
@@ -17,8 +18,8 @@ export class Header extends ExcelComponent {
 			<input type="text" name="name" class="input" placeholder="Новая таблица" value="${this.getTableName()}" />
 
 			<div class="btns">
-				<div class="btn btn-white"><span class="material-icons">logout</span></div>
-				<div class="btn btn-white"><span class="material-icons">delete</span></div>
+				<a href="#dashboard" class="btn btn-white"><span class="material-icons">logout</span></a>
+				<a href="#dashboard" class="btn btn-white"><span class="material-icons delete">delete</span></a>
 			</div>
 		`;
 	}
@@ -29,7 +30,13 @@ export class Header extends ExcelComponent {
 
 	onInput(event) {
 		const text = event.target.value;
-		console.log(text);
 		this.$dispatch(actions.headerInput(text));
+	}
+
+	onClick(event) {
+		if (event.target.className === 'material-icons delete') {
+			const tableKey = ActiveRoute.param;
+			localStorage.removeItem(`excel:${tableKey}`);
+		}
 	}
 }

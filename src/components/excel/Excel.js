@@ -2,8 +2,7 @@ import { $ } from "../../core/dom";
 import { Emitter } from '../../core/Emitter';
 
 export class Excel {
-	constructor(appSelector, options) {
-		this.appEl = $(appSelector);
+	constructor(options) {
 		this.components = options.components || [];
 		this.store = options.store;
 		this.emitter = new Emitter();
@@ -30,11 +29,8 @@ export class Excel {
 		return root;
 	}
 
-	render() {
-		this.appEl.append(this.getRoot());
-
+	init() {
 		this.components.forEach(component => component.init());
-		// this.components.forEach(component => component.destroy());
 	}
 
 	destroy() {
